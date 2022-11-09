@@ -106,11 +106,14 @@ def getBus(userDate):
             departureTime = x['departure']
             arrivalTime = x['arrival']
             stock = x['manifestAvailability']['available']
+            try:
+                for i in x['fareClasses'][0]['fares']:
+                    priceUno = i['valueToDisplay']
 
-            for i in x['fareClasses'][0]['fares']:
-                priceUno = i['valueToDisplay']
+                price = "{:.2f}".format(float(priceUno))
 
-            price = "{:.2f}".format(float(priceUno))
+            except:
+                price = 'Sold Out'
 
             allBus['OnexBus'].append({"departureTime": departureTime, "arrivalTime": arrivalTime, "Price": price,
                                       "stockLevels": stock})
